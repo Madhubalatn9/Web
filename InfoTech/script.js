@@ -202,7 +202,7 @@ form.addEventListener('submit', async function (e) {
 
     // Check registration deadline
     const today = new Date();
-    const deadline = new Date('2026-02-05');
+    const deadline = new Date('2026-02-05T23:59:59'); // Updated Deadline
 
     if (today > deadline) {
         alert('⚠️ Registration Closed\n\nWe apologize, but registration for InfoTech 2026 closed on February 5th, 2026. Please check back for future events!');
@@ -246,7 +246,7 @@ form.addEventListener('submit', async function (e) {
             // Show summary modal
             summaryPreview.textContent = summary;
 
-            // Show success modal instead of summary immediately? 
+            // Show success modal instead of summary immediately?
             // The original logic showed success modal then summary.
             // Let's stick to the flow: Submit -> Success Modal -> (Optional) Summary
 
@@ -263,7 +263,7 @@ form.addEventListener('submit', async function (e) {
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+        alert('An error occurred: ' + error.message + '\n\nMake sure you are accessing the site via http://localhost:5000 and the python server is running.');
     } finally {
         // Reset button
         submitBtn.innerHTML = originalBtnText;
@@ -290,8 +290,14 @@ function collectFormData() {
     formData.member3 = document.getElementById('member3').value;
     formData.member4 = document.getElementById('member4').value;
     formData.transactionId = document.getElementById('transactionId').value;
-    formData.receipt = document.getElementById('receipt').files[0];
+    // formData.receipt is a file, we can't easily collect it for text summary unless we just use name which is already done by existing logic implicitly if file was selected previously, but here we just need visually what was uploaded.
+    // Actually formData.receipt in original code was just the file object.
+    const fileInput = document.getElementById('receipt');
+    formData.receipt = fileInput.files[0];
     formData.notes = document.getElementById('notes').value;
+
+    // Accommodation
+    formData.accommodation = document.getElementById('accommodation').checked;
 }
 
 // ===========================
@@ -301,15 +307,16 @@ function collectFormData() {
 function generateSummary() {
     const technicalEvents = [
         'Paper Presentation',
-        'Technical Quiz',
-        'Code-a-Thon',
-        'Project Expo'
+        'SQL Master',
+        'Python Pro-Coding',
+        'Web-Craft'
     ];
 
     const nonTechnicalEvents = [
-        'Photography / Short Film',
+        'Tech-Quiz',
+        'Photography',
         'Treasure Hunt',
-        'Gaming (E-Sports)'
+        'Connection'
     ];
 
     let summary = `# 🚀 [InfoTech 2026] - Registration Form
@@ -326,6 +333,7 @@ function generateSummary() {
 * **Department & Year:** ${formData.department}
 * **Email Address:** ${formData.email}
 * **Phone Number:** ${formData.phone}
+* **Accommodation:** ${formData.accommodation ? 'Yes (Requested)' : 'No'}
 
 ---
 
@@ -371,7 +379,7 @@ function generateSummary() {
 
     summary += '\n---\n\n## 💳 Payment Confirmation\n';
     summary += `* **Transaction ID:** ${formData.transactionId}\n`;
-    summary += `* **Registration Fee:** ₹500\n`;
+    summary += `* **Registration Fee:** ₹150\n`;
     summary += `* **Receipt:** ${formData.receipt ? formData.receipt.name : 'Not uploaded'}\n`;
 
     if (formData.notes) {
@@ -450,8 +458,8 @@ window.addEventListener('click', function (e) {
 // ===========================
 
 function updateCountdown() {
-    const today = new Date('2026-02-02T14:29:49+05:30');
-    const deadline = new Date('2026-02-05T23:59:59+05:30');
+    const today = new Date();
+    const deadline = new Date('2026-02-05T23:59:59'); // Updated Deadline
     const diff = deadline - today;
 
     if (diff > 0) {
