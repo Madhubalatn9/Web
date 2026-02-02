@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfoTech 2026 - Registration Portal | CSE Department</title>
-    <meta name="description" content="Register for InfoTech 2026, the flagship symposium of the Department of Computer Science and Engineering. Event date: February 7, 2026">
+    <meta name="description"
+        content="Register for InfoTech 2026, the flagship symposium of the Department of Computer Science and Engineering. Event date: February 7, 2026">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Background Animation -->
     <div class="background-animation">
@@ -29,7 +34,7 @@
                     <p class="subtitle">Computer Science & Engineering Symposium</p>
                 </div>
             </div>
-            
+
             <div class="event-info">
                 <div class="info-card">
                     <span class="icon">📅</span>
@@ -49,43 +54,44 @@
 
             <div class="countdown-banner" id="countdownBanner">
                 <div class="pulse-dot"></div>
-                <span id="countdownText">Registration closes in 3 days!</span>
+                <span id="countdownText">Registration closes soon!</span>
             </div>
         </header>
 
         <!-- Welcome Message -->
         <div class="welcome-message">
             <h2>🎯 Welcome to InfoTech 2026!</h2>
-            <p>I'm your registration assistant. Let's get you signed up for the CSE Department's biggest event of the year. Please remember, the portal closes on <strong>February 5th</strong>!</p>
+            <p>Join the Department of Computer Science and Engineering for a day of innovation and fun. <strong>Madhu
+                    (Event Lead)</strong> and the team act as your hosts. Register before <strong>March 18th</strong>!
+            </p>
         </div>
 
         <!-- Registration Form -->
         <form id="registrationForm" class="registration-form">
-            
+
             <!-- Block A: Identity -->
             <section class="form-section" data-section="identity">
                 <div class="section-header">
                     <h3><span class="section-icon">👤</span> Participant Information</h3>
                     <div class="section-line"></div>
                 </div>
-                
+
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="fullName">Full Name <span class="required">*</span></label>
                         <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
-                        <span class="error-message" id="fullNameError"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="college">College/University <span class="required">*</span></label>
-                        <input type="text" id="college" name="college" required placeholder="Enter your college/university name">
-                        <span class="error-message" id="collegeError"></span>
+                        <input type="text" id="college" name="college" required
+                            placeholder="Enter your college/university name">
                     </div>
 
                     <div class="form-group">
                         <label for="department">Department & Year <span class="required">*</span></label>
-                        <input type="text" id="department" name="department" required placeholder="e.g., CSE - 3rd Year">
-                        <span class="error-message" id="departmentError"></span>
+                        <input type="text" id="department" name="department" required
+                            placeholder="e.g., CSE - 3rd Year">
                     </div>
                 </div>
             </section>
@@ -96,7 +102,7 @@
                     <h3><span class="section-icon">📧</span> Contact Details</h3>
                     <div class="section-line"></div>
                 </div>
-                
+
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="email">Email Address <span class="required">*</span></label>
@@ -106,7 +112,8 @@
 
                     <div class="form-group">
                         <label for="phone">Phone Number <span class="required">*</span></label>
-                        <input type="tel" id="phone" name="phone" required placeholder="10-digit mobile number" maxlength="10">
+                        <input type="tel" id="phone" name="phone" required placeholder="10-digit mobile number"
+                            maxlength="10">
                         <span class="error-message" id="phoneError"></span>
                     </div>
                 </div>
@@ -127,41 +134,43 @@
                         </h4>
                         <div class="event-list">
                             <label class="event-item">
-                                <input type="checkbox" name="events" value="Paper Presentation" class="event-checkbox" id="paperPresentation">
+                                <input type="checkbox" name="events" value="Paper Presentation" class="event-checkbox"
+                                    id="paperPresentation">
                                 <span class="checkbox-custom"></span>
                                 <div class="event-details">
-                                    <span class="event-name">Paper Presentation</span>
-                                    <span class="event-description">Present your research and innovative ideas</span>
+                                    <span class="event-name">Paper Presentation (Team 2-3)</span>
+                                    <span class="event-description">Showcase your research and details.</span>
                                 </div>
                             </label>
                             <div class="paper-topic-input" id="paperTopicContainer" style="display: none;">
-                                <input type="text" id="paperTopic" name="paperTopic" placeholder="Enter your paper topic">
+                                <input type="text" id="paperTopic" name="paperTopic"
+                                    placeholder="Enter your paper topic">
                             </div>
 
                             <label class="event-item">
-                                <input type="checkbox" name="events" value="Technical Quiz" class="event-checkbox">
+                                <input type="checkbox" name="events" value="SQL Master" class="event-checkbox">
                                 <span class="checkbox-custom"></span>
                                 <div class="event-details">
-                                    <span class="event-name">Technical Quiz</span>
-                                    <span class="event-description">Test your technical knowledge</span>
+                                    <span class="event-name">SQL Master (Solo)</span>
+                                    <span class="event-description">PostgreSQL database management challenge.</span>
                                 </div>
                             </label>
 
                             <label class="event-item">
-                                <input type="checkbox" name="events" value="Code-a-Thon" class="event-checkbox">
+                                <input type="checkbox" name="events" value="Python Pro-Coding" class="event-checkbox">
                                 <span class="checkbox-custom"></span>
                                 <div class="event-details">
-                                    <span class="event-name">Code-a-Thon</span>
-                                    <span class="event-description">24-hour coding challenge</span>
+                                    <span class="event-name">Python Pro-Coding (Solo)</span>
+                                    <span class="event-description">Logic-based problem solving in Python.</span>
                                 </div>
                             </label>
 
                             <label class="event-item">
-                                <input type="checkbox" name="events" value="Project Expo" class="event-checkbox">
+                                <input type="checkbox" name="events" value="Web-Craft" class="event-checkbox">
                                 <span class="checkbox-custom"></span>
                                 <div class="event-details">
-                                    <span class="event-name">Project Expo</span>
-                                    <span class="event-description">Showcase your innovative projects</span>
+                                    <span class="event-name">Web-Craft (Team 2)</span>
+                                    <span class="event-description">Build responsive interfaces.</span>
                                 </div>
                             </label>
                         </div>
@@ -174,11 +183,20 @@
                         </h4>
                         <div class="event-list">
                             <label class="event-item">
-                                <input type="checkbox" name="events" value="Photography / Short Film" class="event-checkbox">
+                                <input type="checkbox" name="events" value="Tech-Quiz" class="event-checkbox">
                                 <span class="checkbox-custom"></span>
                                 <div class="event-details">
-                                    <span class="event-name">Photography / Short Film</span>
-                                    <span class="event-description">Capture moments or tell stories</span>
+                                    <span class="event-name">Tech-Quiz (Team 2)</span>
+                                    <span class="event-description">General tech and pop culture battle.</span>
+                                </div>
+                            </label>
+
+                            <label class="event-item">
+                                <input type="checkbox" name="events" value="Photography" class="event-checkbox">
+                                <span class="checkbox-custom"></span>
+                                <div class="event-details">
+                                    <span class="event-name">Photography (Solo)</span>
+                                    <span class="event-description">Capture the essence of the symposium.</span>
                                 </div>
                             </label>
 
@@ -186,17 +204,17 @@
                                 <input type="checkbox" name="events" value="Treasure Hunt" class="event-checkbox">
                                 <span class="checkbox-custom"></span>
                                 <div class="event-details">
-                                    <span class="event-name">Treasure Hunt</span>
-                                    <span class="event-description">Adventure-based challenge</span>
+                                    <span class="event-name">Treasure Hunt (Team 3-4)</span>
+                                    <span class="event-description">Campus-wide tech-driven hunt.</span>
                                 </div>
                             </label>
 
                             <label class="event-item">
-                                <input type="checkbox" name="events" value="Gaming (E-Sports)" class="event-checkbox">
+                                <input type="checkbox" name="events" value="Connection" class="event-checkbox">
                                 <span class="checkbox-custom"></span>
                                 <div class="event-details">
-                                    <span class="event-name">Gaming (E-Sports)</span>
-                                    <span class="event-description">Competitive gaming tournament</span>
+                                    <span class="event-name">Connection (Team 2)</span>
+                                    <span class="event-description">Link clues to find tech terms.</span>
                                 </div>
                             </label>
                         </div>
@@ -208,11 +226,13 @@
             <!-- Block D: Team Details -->
             <section class="form-section" data-section="team">
                 <div class="section-header">
-                    <h3><span class="section-icon">👥</span> Team Details <span class="optional-badge">Optional</span></h3>
+                    <h3><span class="section-icon">👥</span> Team Details <span class="optional-badge">Optional</span>
+                    </h3>
                     <div class="section-line"></div>
                 </div>
-                <p class="section-description">If you are participating as a team, please provide the names of your teammates (up to 3 additional members).</p>
-                
+                <p class="section-description">If you are participating in team events, add up to 3 teammates (Max group
+                    size 4).</p>
+
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="member2">Team Member 2</label>
@@ -234,21 +254,30 @@
             <!-- Block E: Payment -->
             <section class="form-section" data-section="payment">
                 <div class="section-header">
-                    <h3><span class="section-icon">💳</span> Payment Confirmation</h3>
+                    <h3><span class="section-icon">💳</span> Payment & Logistics</h3>
                     <div class="section-line"></div>
                 </div>
-                
+
                 <div class="payment-info-box">
                     <div class="fee-display">
-                        <span class="fee-label">Registration Fee:</span>
-                        <span class="fee-amount">₹<span id="feeAmount">500</span></span>
+                        <span class="fee-label">One-time Registration Fee:</span>
+                        <span class="fee-amount">₹<span id="feeAmount">150</span></span>
                     </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="accommodation" name="accommodation">
+                        <span class="checkmark"></span>
+                        <span class="terms-text">I require On-Campus Accommodation (Outstation students only)</span>
+                    </label>
                 </div>
 
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="transactionId">Transaction ID <span class="required">*</span></label>
-                        <input type="text" id="transactionId" name="transactionId" required placeholder="Enter your transaction ID">
+                        <input type="text" id="transactionId" name="transactionId" required
+                            placeholder="Enter your transaction ID">
                         <span class="error-message" id="transactionError"></span>
                     </div>
 
@@ -272,10 +301,11 @@
                     <h3><span class="section-icon">📝</span> Additional Information</h3>
                     <div class="section-line"></div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="notes">Dietary Restrictions or Special Requirements</label>
-                    <textarea id="notes" name="notes" rows="4" placeholder="Please let us know if you have any dietary restrictions, allergies, or special requirements..."></textarea>
+                    <textarea id="notes" name="notes" rows="4"
+                        placeholder="Please let us know if you have any dietary restrictions, allergies, or special requirements..."></textarea>
                 </div>
             </section>
 
@@ -335,4 +365,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
