@@ -34,7 +34,7 @@ const summaryPreview = document.getElementById('summaryPreview');
 // ===========================
 
 // Paper Presentation Topic Toggle
-paperPresentationCheckbox.addEventListener('change', function() {
+paperPresentationCheckbox.addEventListener('change', function () {
     if (this.checked) {
         paperTopicContainer.style.display = 'block';
     } else {
@@ -44,7 +44,7 @@ paperPresentationCheckbox.addEventListener('change', function() {
 });
 
 // File Upload Handler
-fileInput.addEventListener('change', function(e) {
+fileInput.addEventListener('change', function (e) {
     const file = e.target.files[0];
     if (file) {
         uploadText.textContent = `📎 ${file.name}`;
@@ -56,11 +56,11 @@ fileInput.addEventListener('change', function(e) {
 });
 
 // Real-time Validation
-document.getElementById('email').addEventListener('input', function(e) {
+document.getElementById('email').addEventListener('input', function (e) {
     validateEmail(e.target.value);
 });
 
-document.getElementById('phone').addEventListener('input', function(e) {
+document.getElementById('phone').addEventListener('input', function (e) {
     // Only allow numbers
     e.target.value = e.target.value.replace(/[^0-9]/g, '');
     validatePhone(e.target.value);
@@ -73,7 +73,7 @@ document.getElementById('phone').addEventListener('input', function(e) {
 function validateEmail(email) {
     const emailError = document.getElementById('emailError');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     if (!emailRegex.test(email)) {
         emailError.textContent = 'Please enter a valid email address';
         emailError.classList.add('show');
@@ -86,7 +86,7 @@ function validateEmail(email) {
 
 function validatePhone(phone) {
     const phoneError = document.getElementById('phoneError');
-    
+
     if (phone.length !== 10) {
         phoneError.textContent = 'Phone number must be exactly 10 digits';
         phoneError.classList.add('show');
@@ -100,7 +100,7 @@ function validatePhone(phone) {
 function validateEvents() {
     const eventsError = document.getElementById('eventsError');
     const checkboxes = document.querySelectorAll('input[name="events"]:checked');
-    
+
     if (checkboxes.length === 0) {
         eventsError.textContent = 'Please select at least one event';
         eventsError.classList.add('show');
@@ -114,7 +114,7 @@ function validateEvents() {
 function validatePaperTopic() {
     const paperTopic = document.getElementById('paperTopic');
     const isPaperPresentationSelected = document.getElementById('paperPresentation').checked;
-    
+
     if (isPaperPresentationSelected && !paperTopic.value.trim()) {
         alert('Please enter the topic for your Paper Presentation');
         paperTopic.focus();
@@ -125,14 +125,14 @@ function validatePaperTopic() {
 
 function validateForm() {
     let isValid = true;
-    
+
     // Validate required text fields
     const requiredFields = ['fullName', 'college', 'department', 'email', 'phone', 'transactionId'];
     requiredFields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
         const errorId = fieldId + 'Error';
         const errorElement = document.getElementById(errorId);
-        
+
         if (!field.value.trim()) {
             if (errorElement) {
                 errorElement.textContent = 'This field is required';
@@ -145,29 +145,29 @@ function validateForm() {
             }
         }
     });
-    
+
     // Validate email format
     const email = document.getElementById('email').value;
     if (email && !validateEmail(email)) {
         isValid = false;
     }
-    
+
     // Validate phone number
     const phone = document.getElementById('phone').value;
     if (phone && !validatePhone(phone)) {
         isValid = false;
     }
-    
+
     // Validate events
     if (!validateEvents()) {
         isValid = false;
     }
-    
+
     // Validate paper topic
     if (!validatePaperTopic()) {
         isValid = false;
     }
-    
+
     // Validate file upload
     const receipt = document.getElementById('receipt').files[0];
     const receiptError = document.getElementById('receiptError');
@@ -178,7 +178,7 @@ function validateForm() {
     } else {
         receiptError.classList.remove('show');
     }
-    
+
     // Validate terms
     const terms = document.getElementById('terms');
     const termsError = document.getElementById('termsError');
@@ -189,7 +189,7 @@ function validateForm() {
     } else {
         termsError.classList.remove('show');
     }
-    
+
     return isValid;
 }
 
@@ -197,33 +197,78 @@ function validateForm() {
 // Form Submission
 // ===========================
 
-form.addEventListener('submit', function(e) {
+form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    
+
     // Check registration deadline
-    const today = new Date('2026-02-02'); // Current date from context
+    const today = new Date();
     const deadline = new Date('2026-02-05');
-    
+
     if (today > deadline) {
         alert('⚠️ Registration Closed\n\nWe apologize, but registration for InfoTech 2026 closed on February 5th, 2026. Please check back for future events!');
         return;
     }
-    
+
     // Validate form
     if (!validateForm()) {
         alert('Please fill in all required fields correctly.');
         return;
     }
-    
-    // Collect form data
-    collectFormData();
-    
-    // Generate summary
-    const summary = generateSummary();
-    
-    // Show summary modal
-    summaryPreview.textContent = summary;
-    summaryModal.classList.add('show');
+
+    // Show loading state
+    const submitBtn = document.getElementById('submitBtn');
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="btn-text">Submitting...</span>';
+    submitBtn.disabled = true;
+
+    try {
+        // Create FormData object
+        const formDataPayload = new FormData(form);
+
+        // Append checked events manually if needed, but FormData handles named inputs well.
+        // However, we want to make sure multiple 'events' checkboxes are included.
+        // FormData automatically includes all checked checkboxes with the same name.
+
+        const response = await fetch('/register', {
+            method: 'POST',
+            body: formDataPayload
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Collect form data for summary display locally
+            collectFormData();
+
+            // Generate summary
+            const summary = generateSummary();
+
+            // Show summary modal
+            summaryPreview.textContent = summary;
+
+            // Show success modal instead of summary immediately? 
+            // The original logic showed success modal then summary.
+            // Let's stick to the flow: Submit -> Success Modal -> (Optional) Summary
+
+            summaryModal.classList.remove('show'); // Ensure summary is hidden
+            successModal.classList.add('show');
+
+            // Clear local storage draft
+            localStorage.removeItem('infotech2026_draft');
+            form.reset();
+            paperTopicContainer.style.display = 'none';
+            uploadText.textContent = 'Choose file or drag here';
+        } else {
+            alert('Submission failed: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    } finally {
+        // Reset button
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+    }
 });
 
 function collectFormData() {
@@ -232,14 +277,14 @@ function collectFormData() {
     formData.department = document.getElementById('department').value;
     formData.email = document.getElementById('email').value;
     formData.phone = document.getElementById('phone').value;
-    
+
     // Collect selected events
     formData.events = [];
     const eventCheckboxes = document.querySelectorAll('input[name="events"]:checked');
     eventCheckboxes.forEach(checkbox => {
         formData.events.push(checkbox.value);
     });
-    
+
     formData.paperTopic = document.getElementById('paperTopic').value;
     formData.member2 = document.getElementById('member2').value;
     formData.member3 = document.getElementById('member3').value;
@@ -260,13 +305,13 @@ function generateSummary() {
         'Code-a-Thon',
         'Project Expo'
     ];
-    
+
     const nonTechnicalEvents = [
         'Photography / Short Film',
         'Treasure Hunt',
         'Gaming (E-Sports)'
     ];
-    
+
     let summary = `# 🚀 [InfoTech 2026] - Registration Form
 
 **Department:** Department of Computer Science and Engineering
@@ -294,52 +339,52 @@ function generateSummary() {
         const isSelected = formData.events.includes(event);
         const checkbox = isSelected ? '[x]' : '[ ]';
         let line = `- ${checkbox} **${event}**`;
-        
+
         if (event === 'Paper Presentation' && isSelected && formData.paperTopic) {
             line += ` - *Topic:* ${formData.paperTopic}`;
         }
-        
+
         summary += line + '\n';
     });
-    
+
     summary += '\n### Non-Technical Events\n';
-    
+
     // Add non-technical events
     nonTechnicalEvents.forEach(event => {
         const isSelected = formData.events.includes(event);
         const checkbox = isSelected ? '[x]' : '[ ]';
         summary += `- ${checkbox} **${event}**\n`;
     });
-    
+
     summary += '\n---\n\n## 👥 Team Details\n';
-    
+
     // Add team members
     const members = [
         formData.member2,
         formData.member3,
         formData.member4
     ];
-    
+
     members.forEach((member, index) => {
         summary += `${index + 2}. **Member ${index + 2} Name:** ${member || 'None'}\n`;
     });
-    
+
     summary += '\n---\n\n## 💳 Payment Confirmation\n';
     summary += `* **Transaction ID:** ${formData.transactionId}\n`;
     summary += `* **Registration Fee:** ₹500\n`;
     summary += `* **Receipt:** ${formData.receipt ? formData.receipt.name : 'Not uploaded'}\n`;
-    
+
     if (formData.notes) {
         summary += '\n---\n\n## 📝 Additional Notes\n';
         summary += `${formData.notes}\n`;
     }
-    
+
     summary += '\n---\n';
     summary += '**Disclaimer:** By submitting this form, you agree to abide by the rules and regulations of the symposium.\n';
     summary += '\n---\n';
     summary += `\n**Generated on:** ${new Date().toLocaleString('en-IN')}\n`;
     summary += `**Event Date:** February 7, 2026\n`;
-    
+
     return summary;
 }
 
@@ -347,7 +392,7 @@ function generateSummary() {
 // Modal Handlers
 // ===========================
 
-document.getElementById('closeModalBtn').addEventListener('click', function() {
+document.getElementById('closeModalBtn').addEventListener('click', function () {
     successModal.classList.remove('show');
     // Optionally reset form
     form.reset();
@@ -355,25 +400,25 @@ document.getElementById('closeModalBtn').addEventListener('click', function() {
     uploadText.textContent = 'Choose file or drag here';
 });
 
-document.getElementById('downloadBtn').addEventListener('click', function() {
+document.getElementById('downloadBtn').addEventListener('click', function () {
     successModal.classList.remove('show');
     summaryModal.classList.add('show');
 });
 
-document.getElementById('closeSummaryBtn').addEventListener('click', function() {
+document.getElementById('closeSummaryBtn').addEventListener('click', function () {
     summaryModal.classList.remove('show');
 });
 
-document.getElementById('copySummaryBtn').addEventListener('click', function() {
+document.getElementById('copySummaryBtn').addEventListener('click', function () {
     const summary = summaryPreview.textContent;
-    navigator.clipboard.writeText(summary).then(function() {
+    navigator.clipboard.writeText(summary).then(function () {
         alert('✅ Summary copied to clipboard!');
-    }, function() {
+    }, function () {
         alert('❌ Failed to copy to clipboard');
     });
 });
 
-document.getElementById('downloadSummaryBtn').addEventListener('click', function() {
+document.getElementById('downloadSummaryBtn').addEventListener('click', function () {
     const summary = summaryPreview.textContent;
     const blob = new Blob([summary], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
@@ -384,14 +429,14 @@ document.getElementById('downloadSummaryBtn').addEventListener('click', function
     a.click();
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
-    
+
     // Show success modal
     summaryModal.classList.remove('show');
     successModal.classList.add('show');
 });
 
 // Close modals when clicking outside
-window.addEventListener('click', function(e) {
+window.addEventListener('click', function (e) {
     if (e.target === successModal) {
         successModal.classList.remove('show');
     }
@@ -408,12 +453,12 @@ function updateCountdown() {
     const today = new Date('2026-02-02T14:29:49+05:30');
     const deadline = new Date('2026-02-05T23:59:59+05:30');
     const diff = deadline - today;
-    
+
     if (diff > 0) {
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        
+
         let countdownText = '';
         if (days > 0) {
             countdownText = `Registration closes in ${days} day${days > 1 ? 's' : ''}!`;
@@ -422,7 +467,7 @@ function updateCountdown() {
         } else {
             countdownText = `Registration closes in ${minutes} minute${minutes > 1 ? 's' : ''}!`;
         }
-        
+
         document.getElementById('countdownText').textContent = countdownText;
     } else {
         document.getElementById('countdownBanner').innerHTML = '<div class="pulse-dot"></div><span>Registration Closed</span>';
@@ -445,7 +490,7 @@ const observerOptions = {
     rootMargin: '0px 0px -100px 0px'
 };
 
-const observer = new IntersectionObserver(function(entries) {
+const observer = new IntersectionObserver(function (entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
@@ -468,10 +513,10 @@ document.querySelectorAll('.form-section').forEach(section => {
 
 function updateFormProgress() {
     const requiredFields = [
-        'fullName', 'college', 'department', 
+        'fullName', 'college', 'department',
         'email', 'phone', 'transactionId'
     ];
-    
+
     let filledFields = 0;
     requiredFields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
@@ -479,21 +524,21 @@ function updateFormProgress() {
             filledFields++;
         }
     });
-    
+
     // Check if at least one event is selected
     const eventCheckboxes = document.querySelectorAll('input[name="events"]:checked');
     if (eventCheckboxes.length > 0) {
         filledFields++;
     }
-    
+
     // Check if terms are accepted
     if (document.getElementById('terms').checked) {
         filledFields++;
     }
-    
+
     const totalFields = requiredFields.length + 2; // +2 for events and terms
     const progress = (filledFields / totalFields) * 100;
-    
+
     // You can use this progress value to show a progress bar if needed
     console.log(`Form Progress: ${progress.toFixed(0)}%`);
 }
@@ -508,12 +553,12 @@ form.addEventListener('change', updateFormProgress);
 
 // Add focus/blur effects to all inputs
 document.querySelectorAll('input, textarea').forEach(input => {
-    input.addEventListener('focus', function() {
+    input.addEventListener('focus', function () {
         this.parentElement.style.transform = 'scale(1.01)';
         this.parentElement.style.transition = 'transform 0.2s ease';
     });
-    
-    input.addEventListener('blur', function() {
+
+    input.addEventListener('blur', function () {
         this.parentElement.style.transform = 'scale(1)';
     });
 });
@@ -534,7 +579,7 @@ function saveFormToLocalStorage() {
         member4: document.getElementById('member4').value,
         notes: document.getElementById('notes').value
     };
-    
+
     localStorage.setItem('infotech2026_draft', JSON.stringify(formDataToSave));
 }
 
@@ -558,7 +603,7 @@ window.addEventListener('load', loadFormFromLocalStorage);
 setInterval(saveFormToLocalStorage, 30000);
 
 // Clear saved data on successful submission
-document.getElementById('downloadSummaryBtn').addEventListener('click', function() {
+document.getElementById('downloadSummaryBtn').addEventListener('click', function () {
     localStorage.removeItem('infotech2026_draft');
 });
 
