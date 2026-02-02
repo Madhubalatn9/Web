@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoTech 2026 - Registration Portal | CSE Department</title>
+    <meta name="description" content="Register for InfoTech 2026, the flagship symposium of the Department of Computer Science and Engineering. Event date: February 7, 2026">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header Section -->
+        <header class="hero-section">
+            <div class="logo-container">
+                <div class="logo-icon">🚀</div>
+                <div class="logo-text">
+                    <h1>InfoTech <span class="year">2026</span></h1>
+                    <p class="subtitle">Computer Science & Engineering Symposium</p>
+                </div>
+            </div>
+            
+            <div class="event-info">
+                <div class="info-card">
+                    <span class="icon">📅</span>
+                    <div>
+                        <div class="label">Event Date</div>
+                        <div class="value">February 7, 2026</div>
+                    </div>
+                </div>
+                <div class="info-card urgent">
+                    <span class="icon">⏰</span>
+                    <div>
+                        <div class="label">Registration Closes</div>
+                        <div class="value">February 5, 2026</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="countdown-banner" id="countdownBanner">
+                <div class="pulse-dot"></div>
+                <span id="countdownText">Registration closes in 3 days!</span>
+            </div>
+        </header>
+
+        <!-- Welcome Message -->
+        <div class="welcome-message">
+            <h2>🎯 Welcome to InfoTech 2026!</h2>
+            <p>I'm your registration assistant. Let's get you signed up for the CSE Department's biggest event of the year. Please remember, the portal closes on <strong>February 5th</strong>!</p>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="registrationForm" class="registration-form">
+            
+            <!-- Block A: Identity -->
+            <section class="form-section" data-section="identity">
+                <div class="section-header">
+                    <h3><span class="section-icon">👤</span> Participant Information</h3>
+                    <div class="section-line"></div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fullName">Full Name <span class="required">*</span></label>
+                        <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+                        <span class="error-message" id="fullNameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="college">College/University <span class="required">*</span></label>
+                        <input type="text" id="college" name="college" required placeholder="Enter your college/university name">
+                        <span class="error-message" id="collegeError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="department">Department & Year <span class="required">*</span></label>
+                        <input type="text" id="department" name="department" required placeholder="e.g., CSE - 3rd Year">
+                        <span class="error-message" id="departmentError"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Block B: Contact -->
+            <section class="form-section" data-section="contact">
+                <div class="section-header">
+                    <h3><span class="section-icon">📧</span> Contact Details</h3>
+                    <div class="section-line"></div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        <span class="error-message" id="emailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" required placeholder="10-digit mobile number" maxlength="10">
+                        <span class="error-message" id="phoneError"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Block C: Events -->
+            <section class="form-section" data-section="events">
+                <div class="section-header">
+                    <h3><span class="section-icon">🎯</span> Event Selection</h3>
+                    <div class="section-line"></div>
+                </div>
+
+                <div class="events-container">
+                    <div class="event-category">
+                        <h4 class="category-title">
+                            <span class="category-icon">💻</span>
+                            Technical Events
+                        </h4>
+                        <div class="event-list">
+                            <label class="event-item">
+                                <input type="checkbox" name="events" value="Paper Presentation" class="event-checkbox" id="paperPresentation">
+                                <span class="checkbox-custom"></span>
+                                <div class="event-details">
+                                    <span class="event-name">Paper Presentation</span>
+                                    <span class="event-description">Present your research and innovative ideas</span>
+                                </div>
+                            </label>
+                            <div class="paper-topic-input" id="paperTopicContainer" style="display: none;">
+                                <input type="text" id="paperTopic" name="paperTopic" placeholder="Enter your paper topic">
+                            </div>
+
+                            <label class="event-item">
+                                <input type="checkbox" name="events" value="Technical Quiz" class="event-checkbox">
+                                <span class="checkbox-custom"></span>
+                                <div class="event-details">
+                                    <span class="event-name">Technical Quiz</span>
+                                    <span class="event-description">Test your technical knowledge</span>
+                                </div>
+                            </label>
+
+                            <label class="event-item">
+                                <input type="checkbox" name="events" value="Code-a-Thon" class="event-checkbox">
+                                <span class="checkbox-custom"></span>
+                                <div class="event-details">
+                                    <span class="event-name">Code-a-Thon</span>
+                                    <span class="event-description">24-hour coding challenge</span>
+                                </div>
+                            </label>
+
+                            <label class="event-item">
+                                <input type="checkbox" name="events" value="Project Expo" class="event-checkbox">
+                                <span class="checkbox-custom"></span>
+                                <div class="event-details">
+                                    <span class="event-name">Project Expo</span>
+                                    <span class="event-description">Showcase your innovative projects</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="event-category">
+                        <h4 class="category-title">
+                            <span class="category-icon">🎨</span>
+                            Non-Technical Events
+                        </h4>
+                        <div class="event-list">
+                            <label class="event-item">
+                                <input type="checkbox" name="events" value="Photography / Short Film" class="event-checkbox">
+                                <span class="checkbox-custom"></span>
+                                <div class="event-details">
+                                    <span class="event-name">Photography / Short Film</span>
+                                    <span class="event-description">Capture moments or tell stories</span>
+                                </div>
+                            </label>
+
+                            <label class="event-item">
+                                <input type="checkbox" name="events" value="Treasure Hunt" class="event-checkbox">
+                                <span class="checkbox-custom"></span>
+                                <div class="event-details">
+                                    <span class="event-name">Treasure Hunt</span>
+                                    <span class="event-description">Adventure-based challenge</span>
+                                </div>
+                            </label>
+
+                            <label class="event-item">
+                                <input type="checkbox" name="events" value="Gaming (E-Sports)" class="event-checkbox">
+                                <span class="checkbox-custom"></span>
+                                <div class="event-details">
+                                    <span class="event-name">Gaming (E-Sports)</span>
+                                    <span class="event-description">Competitive gaming tournament</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <span class="error-message" id="eventsError"></span>
+            </section>
+
+            <!-- Block D: Team Details -->
+            <section class="form-section" data-section="team">
+                <div class="section-header">
+                    <h3><span class="section-icon">👥</span> Team Details <span class="optional-badge">Optional</span></h3>
+                    <div class="section-line"></div>
+                </div>
+                <p class="section-description">If you are participating as a team, please provide the names of your teammates (up to 3 additional members).</p>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="member2">Team Member 2</label>
+                        <input type="text" id="member2" name="member2" placeholder="Full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="member3">Team Member 3</label>
+                        <input type="text" id="member3" name="member3" placeholder="Full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="member4">Team Member 4</label>
+                        <input type="text" id="member4" name="member4" placeholder="Full name">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Block E: Payment -->
+            <section class="form-section" data-section="payment">
+                <div class="section-header">
+                    <h3><span class="section-icon">💳</span> Payment Confirmation</h3>
+                    <div class="section-line"></div>
+                </div>
+                
+                <div class="payment-info-box">
+                    <div class="fee-display">
+                        <span class="fee-label">Registration Fee:</span>
+                        <span class="fee-amount">₹<span id="feeAmount">500</span></span>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="transactionId">Transaction ID <span class="required">*</span></label>
+                        <input type="text" id="transactionId" name="transactionId" required placeholder="Enter your transaction ID">
+                        <span class="error-message" id="transactionError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="receipt">Upload Payment Receipt <span class="required">*</span></label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="receipt" name="receipt" accept="image/*,.pdf" required>
+                            <label for="receipt" class="file-upload-label">
+                                <span class="upload-icon">📎</span>
+                                <span class="upload-text" id="uploadText">Choose file or drag here</span>
+                            </label>
+                        </div>
+                        <span class="error-message" id="receiptError"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Additional Notes -->
+            <section class="form-section" data-section="notes">
+                <div class="section-header">
+                    <h3><span class="section-icon">📝</span> Additional Information</h3>
+                    <div class="section-line"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Dietary Restrictions or Special Requirements</label>
+                    <textarea id="notes" name="notes" rows="4" placeholder="Please let us know if you have any dietary restrictions, allergies, or special requirements..."></textarea>
+                </div>
+            </section>
+
+            <!-- Terms & Conditions -->
+            <div class="terms-section">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <span class="checkmark"></span>
+                    <span class="terms-text">I agree to abide by the rules and regulations of the symposium</span>
+                </label>
+                <span class="error-message" id="termsError"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-section">
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span class="btn-text">Complete Registration</span>
+                    <span class="btn-icon">🚀</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-animation">
+                <div class="checkmark-circle">
+                    <div class="checkmark"></div>
+                </div>
+            </div>
+            <h2>Registration Successful! 🎉</h2>
+            <p>Thank you for registering for InfoTech 2026!</p>
+            <div class="modal-actions">
+                <button class="btn-primary" id="downloadBtn">Download Summary</button>
+                <button class="btn-secondary" id="closeModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Preview Modal -->
+    <div class="modal" id="summaryModal">
+        <div class="modal-content summary-content">
+            <div class="modal-header">
+                <h2>📋 Registration Summary</h2>
+                <button class="close-btn" id="closeSummaryBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <pre id="summaryPreview"></pre>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-primary" id="copySummaryBtn">Copy to Clipboard</button>
+                <button class="btn-primary" id="downloadSummaryBtn">Download as Text</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
